@@ -1,75 +1,72 @@
-from Paises import Countries
+import mysql.connector
 
-paises = Countries()
+class Paises:
 
-menu='''\n                                  
-1) Insertar País      
-2) Eliminar País       
-3) Modificar País      
-4) Imprimir Paises    
-5) Salir'''
+    def __init__(self):
+        self.cn = mysql.connector.connect(host="localhost", user="root", passwd="123", database="paises_proyecto")
 
-def main():
 
-    opcion='0'
 
-    while opcion !='5':
-        print(menu)
-        opcion = input("¿Que opción deseas?")
+    def __str__(self): 
         
-        if opcion == '1':
-            print("*Eligio Insertar Paises*")
+        datos=self.consultar_paises() #Llama a esa consulta y lo guarda en esa variable.
+        aux=""
 
-            ISO3 = input("Introduce la clave ISO3 del nuevo País: ")
-            CountryName = input("Introduce el nombre del nuevo País: ")
-            Capital = input("Introduce la capital del nuevo País: ")
-            CurrencyCode = input("Introduce el código de su moneda: ")
+        for row in datos:
+            aux=aux + str(row) + "\n"
 
-            r = paises.insertar_pais(ISO3,CountryName,Capital,CurrencyCode)
-            
-            if(r==0):
-                print("-> No se pudo insertar el páis...")
-            else:
-                print("-> El páis se insertó correctamente")
-        elif opcion == '2':
-            print("*****  Eliminar Paises  *****")
-            Id = int(input("Introduce el Id del país que desea eliminar: "))
-            r = paises.eliminar_pais(Id)
-            if(r==0):
-                print("-> El páis no existe")
-            else:
-                print("-> El páis se eliminó correctamente")
-        elif opcion == '3':
-            print("*****  Modificar Paises  *****")
-            Id = int(input("Introduce el Id del país que desea modificar: "))
-            pais = paises.buscar_pais(Id)
-            if pais == None:
-                print("-> El páis no existe")
-            else:
-                print("*** Pais a modificar: ")
-                print(pais)
-                print()
-                ISO3 = input("Introduce la nueva clave ISO3 del  País: ")
-                CountryName = input("Introduce el nuevo nombre del  País: ")
-                Capital = input("Introduce la nueva capital del  País: ")
-                CurrencyCode = input("Introduce el nuevo código de su moneda: ")
-                r = paises.modificar_pais(Id,ISO3,CountryName,Capital,CurrencyCode)
-                if(r==0):
-                    print("-> Error al modificar el país...")
-                else:
-                    print("-> El páis se modificó correctamente")
-
-        elif opcion == '4':
-            print("*****  Imprimir Paises  *****")
-            print(paises)
-        elif opcion == '5':
-            print("-> Saliendo del sistema")
-        else:            
-            print("-> Opción no válida")
-
-
+        return aux
     
+    def consultar_paises(self): #consulta de todas los paises
+        cur = self.cn.cursor()
 
+        cur.execute("SELECT * FROM countries")
+        datos = cur.fetchall()
+        cur.close()    
 
-if __name__ == "__main__":
-    main()
+        return datos
+
+    def buscar_pais(self, Id):
+        cur = self.cn.cursor()
+
+        sql= "SELECT * FROM countries WHERE Id = {}".format(Id)
+        cur.execute(sql)
+        datos = cur.fetchone()
+        cur.close()    
+
+        return datos
+    
+    def insertar_pais(self,ISO3, CountryName, Capital, CurrencyCode):
+        cur = self.cn.cursor()
+
+        sql='''INSERT INTO countries (ISO3, CountryName, Capital, CurrencyCode) 
+        VALUES('{}', '{}', '{}', '{}')'''.format(ISO3, CountryName, Capital, CurrencyCode)
+        cur.execute(sql)
+        n=cur.rowcount
+        self.cn.commit()    
+        cur.close()
+
+        return n    
+
+    def eliminar_pais(self,Id):
+        cur = self.cn.cursor()
+
+        sql='''DELETE FROM countries WHERE Id = {}'''.format(Id)
+        cur.execute(sql)
+        n=cur.rowcount
+        self.cn.commit()    
+        cur.close()
+
+        return n   
+
+    def modificar_pais(self,Id, ISO3, CountryName, Capital, CurrencyCode):
+        cur = self.cn.cursor()
+
+        sql='''UPDATE countries SET ISO3='{}', CountryName='{}', Capital='{}',
+        CurrencyCode='{}' WHERE Id={}'''.format(ISO3, CountryName, Capital, CurrencyCode,Id)
+        cur.execute(sql)
+        n=cur.rowcount
+        self.cn.commit()   
+        cur.close()
+
+        return n   
