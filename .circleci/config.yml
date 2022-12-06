@@ -7,6 +7,7 @@ jobs:
       - image: "circleci/python:3.6.4"
     steps:
       - checkout
+      - run: python3 Paises.py
       - run: python3 main.py
   test:
     working_directory: ~/circleci-python
