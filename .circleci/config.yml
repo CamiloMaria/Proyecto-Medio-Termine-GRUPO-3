@@ -21,7 +21,7 @@ jobs:
       - image: cimg/mariadb:10.6
         environment:
           MYSQL_DATABASE: "paises_proyecto"
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: 123          
           MYSQL_USER: "root"
           MYSQL_HOST: "localhost"
     steps:
