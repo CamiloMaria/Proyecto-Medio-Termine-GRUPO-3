@@ -1,16 +1,32 @@
 version: 2.1
-orbs:
-  browser-tools: circleci/browser-tools@1.2.3
+
 jobs:
   build:
+    working_directory: ~/circleci-python
     docker:
-      - image: "circleci/python:3.6.4" # The primary container where steps are run       
-      - image: cimg/mariadb:10.6      
+      - image: "circleci/python:3.6.4"
+      - image: cimg/mariadb:10.6
         environment:
           MYSQL_DATABASE: "paises_proyecto"
           MYSQL_USER: "root"
           MYSQL_HOST: "localhost"
           MYSQL_PASSWORD: 123
+    steps:
+      - checkout
+      - run: python3 main.py
+  test:
+    working_directory: ~/circleci-python
+    docker:
+      - image: "circleci/python:3.6.4"
+      - image: cimg/mariadb:10.6
+        environment:
+          MYSQL_DATABASE: "paises_proyecto"
+          MYSQL_USER: "root"
+          MYSQL_HOST: "localhost"
+          MYSQL_PASSWORD: 123
+    steps:
+      - checkout
+      - run: python3 test.py
 
 workflows:
   build_test:
@@ -19,4 +35,5 @@ workflows:
       - test:
           requires:
             - build
+
     
