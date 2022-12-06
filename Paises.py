@@ -3,7 +3,7 @@ import mysql.connector
 class Paises:
 
     def __init__(self):
-        self.cn = mysql.connector.connect(host="localhost", user="root", passwd="123", database="paises_proyecto")
+        self.cn = mysql.connector.connect(host="localhost", user="root", passwd="123123", database="paises_proyecto")
 
 
 
