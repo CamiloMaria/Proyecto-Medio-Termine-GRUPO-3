@@ -9,15 +9,15 @@ class TestCRUD(unittest.TestCase):
         pass
     
     def test_insertar(self):
-        actual = paises.insertar_pais("RPD", "Republica Pacheca Dominicana", "Pachequita", "RPS")
+        actual = paises.insertar_pais("PLS", "Republica Pacheca Dominicana", "Pachequita", "RE3")
         self.assertEqual(actual, 1) 
   
     def test_delete(self):
-        actual = paises.eliminar_pais(7)
+        actual = paises.eliminar_pais(16)
         self.assertEqual(actual, 1)
         
     def test_modificar(self):
-        actual = paises.modificar_pais(7, "PLD", "Pelicanos La Dominicana", "Pelicanos", "PLS")
+        actual = paises.modificar_pais(7, "PTS", "Pelicanos La Dominicana", "Pelicanos", "XCC")
         self.assertEqual(actual, 1) 
 
 
