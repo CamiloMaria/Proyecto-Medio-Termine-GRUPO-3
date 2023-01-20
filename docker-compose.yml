@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  proyectomedioterminegrupo3:
+    image: proyectomedioterminegrupo3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
