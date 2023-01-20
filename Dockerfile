@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the entrypoint for the container
-ENTRYPOINT ["python", "paises.py"]
+ENTRYPOINT ["python", "main.py"]
