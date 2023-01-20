@@ -6,10 +6,8 @@ class Paises:
         self.cn = mysql.connector.connect(host="localhost", user="root", passwd="123321", database="paises_proyecto")
 
 
-
     def __str__(self): 
-        
-        datos=self.consultar_paises() #Llama a esa consulta y lo guarda en esa variable.
+        datos= self.consultar_paises() #Llama a esa consulta y lo guarda en esa variable.
         aux=""
 
         for row in datos:
