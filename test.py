@@ -13,7 +13,7 @@ class TestCRUD(unittest.TestCase):
         self.assertEqual(actual, 1) 
   
     def test_delete(self):
-        actual = paises.eliminar_pais(16)
+        actual = paises.eliminar_pais(17)
         self.assertEqual(actual, 1)
         
     def test_modificar(self):
